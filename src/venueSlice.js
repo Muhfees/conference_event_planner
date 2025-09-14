@@ -1,4 +1,3 @@
-// venueSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 export const venueSlice = createSlice({
@@ -34,22 +33,24 @@ export const venueSlice = createSlice({
       cost: 1100,
       quantity: 0,
     },
-  
   ],
   reducers: {
-   
     incrementQuantity: (state, action) => {
-      const { payload: index } = action;
-      if (state[index]) {
-        if (state[index].name === " Auditorium Hall (Capacity:200)" && state[index].quantity >= 3) {
-          return;        }
-        state[index].quantity++;
+      const index = action.payload;
+      const item = state[index];
+      if (item) {
+        // Limit Auditorium Hall to 3 bookings
+        if (item.name === "Auditorium Hall (Capacity:200)" && item.quantity >= 3) {
+          return;
+        }
+        item.quantity++;
       }
     },
     decrementQuantity: (state, action) => {
-      const { payload: index } = action;
-      if (state[index] && state[index].quantity > 0) {
-        state[index].quantity--;
+      const index = action.payload;
+      const item = state[index];
+      if (item && item.quantity > 0) {
+        item.quantity--;
       }
     },
   },
